@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Courses</h1>
+    <a href="/courses/add" class="btn btn-primary">+ Add Course</a>
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Level</th>
+                <th>Department</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (courses.length === 0) { %>
+            <tr><td colspan="6" class="empty">No courses found.</td></tr>
+            <% } %>
+            <% courses.forEach(c => { %>
+            <tr>
+                <td><strong><%= c.CourseCode %></strong></td>
+                <td><%= c.CourseName %><% if (c.Description) { %><br><small class="text-muted"><%= c.Description.substring(0,60) %>...</small><% } %></td>
+                <td class="center"><%= c.Credits %></td>
+                <td class="center"><span class="badge badge-blue"><%= c.Level %></span></td>
+                <td><%= c.DeptName %></td>
+                <td><span class="badge badge-<%= c.IsActive ? 'green' : 'red' %>"><%= c.IsActive ? 'Active' : 'Inactive' %></span></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

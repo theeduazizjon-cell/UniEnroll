@@ -1,0 +1,83 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Add New Student</h1>
+    <a href="/students" class="btn btn-secondary">← Back</a>
+</div>
+
+<% if (error) { %>
+<div class="alert alert-error"><%= error %></div>
+<% } %>
+
+<div class="form-card">
+    <form action="/students/add" method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="FirstName">First Name *</label>
+                <input type="text" id="FirstName" name="FirstName" required placeholder="e.g. Alice">
+            </div>
+            <div class="form-group">
+                <label for="LastName">Last Name *</label>
+                <input type="text" id="LastName" name="LastName" required placeholder="e.g. Smith">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="Email">Email *</label>
+                <input type="email" id="Email" name="Email" required placeholder="alice@student.uni.edu">
+            </div>
+            <div class="form-group">
+                <label for="Phone">Phone</label>
+                <input type="text" id="Phone" name="Phone" placeholder="555-0000">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="BirthDate">Birth Date</label>
+                <input type="date" id="BirthDate" name="BirthDate">
+            </div>
+            <div class="form-group">
+                <label for="Gender">Gender</label>
+                <select id="Gender" name="Gender">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Address">Address</label>
+            <input type="text" id="Address" name="Address" placeholder="123 Main St">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="ProgramID">Program *</label>
+                <select id="ProgramID" name="ProgramID" required>
+                    <option value="">Select a program...</option>
+                    <% programs.forEach(p => { %>
+                    <option value="<%= p.ProgramID %>"><%= p.ProgramName %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="AdvisorID">Advisor</label>
+                <select id="AdvisorID" name="AdvisorID">
+                    <option value="">No advisor yet</option>
+                    <% advisors.forEach(a => { %>
+                    <option value="<%= a.AdvisorID %>"><%= a.AdvisorName %></option>
+                    <% }) %>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="EnrollYear">Enrollment Year *</label>
+            <input type="number" id="EnrollYear" name="EnrollYear" value="<%= new Date().getFullYear() %>" min="2000" max="2030" required>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Student</button>
+            <a href="/students" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>

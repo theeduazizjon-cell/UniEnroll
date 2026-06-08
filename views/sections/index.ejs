@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Course Sections</h1>
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Course</th>
+                <th>Sec</th>
+                <th>Semester</th>
+                <th>Instructor</th>
+                <th>Room</th>
+                <th>Schedule</th>
+                <th>Capacity</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (sections.length === 0) { %>
+            <tr><td colspan="9" class="empty">No sections found.</td></tr>
+            <% } %>
+            <% sections.forEach(s => { %>
+            <tr class="<%= s.SemesterActive ? 'row-highlight' : '' %>">
+                <td><%= s.SectionID %></td>
+                <td><strong><%= s.CourseCode %></strong> – <%= s.CourseName %></td>
+                <td class="center"><%= s.SectionNo %></td>
+                <td><%= s.Semester %></td>
+                <td><%= s.InstructorName %></td>
+                <td><%= s.Room || '—' %></td>
+                <td><small><%= s.Schedule || '—' %></small></td>
+                <td class="center"><%= s.MaxCapacity %></td>
+                <td class="center"><span class="badge badge-<%= s.SemesterActive ? 'green' : 'gray' %>"><%= s.SemesterActive ? 'Current' : 'Past' %></span></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

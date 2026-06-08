@@ -1,0 +1,83 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Student Transcript</h1>
+</div>
+
+<div class="form-card">
+    <form action="" method="GET" onsubmit="window.location='/transcript/'+document.getElementById('StudentID').value; return false;">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="StudentID">Select Student</label>
+                <select id="StudentID" name="StudentID">
+                    <option value="">Choose a student...</option>
+                    <% students.forEach(s => { %>
+                    <option value="<%= s.StudentID %>" <%= selectedStudent && selectedStudent.StudentID == s.StudentID ? 'selected' : '' %>><%= s.StudentName %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group" style="align-self: flex-end;">
+                <button type="submit" class="btn btn-primary">View Transcript</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<% if (selectedStudent) { %>
+<div class="student-info-card">
+    <h2><%= selectedStudent.StudentName %></h2>
+    <div class="info-grid">
+        <div><strong>Program:</strong> <%= selectedStudent.ProgramName %></div>
+        <div><strong>Degree:</strong> <%= selectedStudent.DegreeLevel %></div>
+        <div><strong>Department:</strong> <%= selectedStudent.DeptName %></div>
+        <div><strong>Advisor:</strong> <%= selectedStudent.AdvisorName || 'None' %></div>
+        <div><strong>Status:</strong> <span class="badge badge-<%= selectedStudent.Status === 'Active' ? 'green' : 'gray' %>"><%= selectedStudent.Status %></span></div>
+        <div><strong>GPA:</strong> <strong class="gpa"><%= selectedStudent.GPA !== null ? parseFloat(selectedStudent.GPA).toFixed(2) : 'N/A' %></strong></div>
+    </div>
+</div>
+
+<% if (transcript && transcript.length > 0) { %>
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Status</th>
+                <th>Grade</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let totalCredits = 0; let totalPoints = 0; %>
+            <% transcript.forEach(t => { %>
+            <tr>
+                <td><%= t.Semester %></td>
+                <td><strong><%= t.CourseCode %></strong></td>
+                <td><%= t.CourseName %></td>
+                <td class="center"><%= t.Credits %></td>
+                <td><span class="badge badge-<%= t.EnrollStatus === 'Completed' ? 'blue' : t.EnrollStatus === 'Enrolled' ? 'green' : 'red' %>"><%= t.EnrollStatus %></span></td>
+                <td class="center"><strong><%= t.LetterGrade || '—' %></strong></td>
+                <td class="center"><%= t.GradePoints !== null ? parseFloat(t.GradePoints).toFixed(2) : '—' %></td>
+            </tr>
+            <% if (t.GradePoints && t.Credits && t.EnrollStatus === 'Completed') { totalCredits += t.Credits; totalPoints += t.GradePoints * t.Credits; } %>
+            <% }) %>
+        </tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="3"><strong>Cumulative GPA</strong></td>
+                <td class="center"><strong><%= totalCredits %></strong></td>
+                <td colspan="2"></td>
+                <td class="center"><strong><%= totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 'N/A' %></strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<% } else { %>
+<div class="alert alert-info">No transcript records found for this student.</div>
+<% } %>
+<% } %>
+
+<%- include('../partials/footer') %>

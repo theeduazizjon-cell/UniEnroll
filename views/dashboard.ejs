@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p class="subtitle">Welcome to UniEnroll – Course Registration &amp; Academic Advising System</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card blue">
+        <div class="stat-icon">👩‍🎓</div>
+        <div class="stat-number"><%= stats.students %></div>
+        <div class="stat-label">Total Students</div>
+        <a href="/students" class="stat-link">View all →</a>
+    </div>
+    <div class="stat-card green">
+        <div class="stat-icon">📚</div>
+        <div class="stat-number"><%= stats.courses %></div>
+        <div class="stat-label">Active Courses</div>
+        <a href="/courses" class="stat-link">View all →</a>
+    </div>
+    <div class="stat-card orange">
+        <div class="stat-icon">🏫</div>
+        <div class="stat-number"><%= stats.sections %></div>
+        <div class="stat-label">Current Sections</div>
+        <a href="/sections" class="stat-link">View all →</a>
+    </div>
+    <div class="stat-card purple">
+        <div class="stat-icon">📝</div>
+        <div class="stat-number"><%= stats.enrollments %></div>
+        <div class="stat-label">Active Enrollments</div>
+        <a href="/enrollments" class="stat-link">View all →</a>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-grid">
+        <a href="/students/add" class="action-card">
+            <span class="action-icon">➕</span>
+            <span>Add Student</span>
+        </a>
+        <a href="/courses/add" class="action-card">
+            <span class="action-icon">➕</span>
+            <span>Add Course</span>
+        </a>
+        <a href="/enrollments/add" class="action-card">
+            <span class="action-icon">📋</span>
+            <span>Enroll Student</span>
+        </a>
+        <a href="/transcript" class="action-card">
+            <span class="action-icon">📄</span>
+            <span>View Transcript</span>
+        </a>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

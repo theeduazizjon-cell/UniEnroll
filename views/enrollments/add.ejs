@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Enroll a Student</h1>
+    <a href="/enrollments" class="btn btn-secondary">← Back</a>
+</div>
+
+<% if (error) { %>
+<div class="alert alert-error"><%= error %></div>
+<% } %>
+
+<div class="form-card">
+    <form action="/enrollments/add" method="POST">
+        <div class="form-group">
+            <label for="StudentID">Student *</label>
+            <select id="StudentID" name="StudentID" required>
+                <option value="">Select a student...</option>
+                <% students.forEach(s => { %>
+                <option value="<%= s.StudentID %>"><%= s.StudentName %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="SectionID">Section (Current Semester) *</label>
+            <select id="SectionID" name="SectionID" required>
+                <option value="">Select a section...</option>
+                <% sections.forEach(s => { %>
+                <option value="<%= s.SectionID %>"><%= s.SectionLabel %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enroll Student</button>
+            <a href="/enrollments" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>

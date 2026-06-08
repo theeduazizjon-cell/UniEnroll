@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Students</h1>
+    <a href="/students/add" class="btn btn-primary">+ Add Student</a>
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Program</th>
+                <th>Degree</th>
+                <th>Advisor</th>
+                <th>GPA</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (students.length === 0) { %>
+            <tr><td colspan="8" class="empty">No students found.</td></tr>
+            <% } %>
+            <% students.forEach(s => { %>
+            <tr>
+                <td><%= s.StudentID %></td>
+                <td><strong><%= s.StudentName %></strong></td>
+                <td><a href="mailto:<%= s.Email %>"><%= s.Email %></a></td>
+                <td><%= s.ProgramName %></td>
+                <td><span class="badge badge-blue"><%= s.DegreeLevel %></span></td>
+                <td><%= s.AdvisorName || '—' %></td>
+                <td><strong><%= s.GPA !== null ? parseFloat(s.GPA).toFixed(2) : 'N/A' %></strong></td>
+                <td><span class="badge badge-<%= s.Status === 'Active' ? 'green' : s.Status === 'Graduated' ? 'blue' : 'red' %>"><%= s.Status %></span></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

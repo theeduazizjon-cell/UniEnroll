@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h1>Enrollments</h1>
+    <a href="/enrollments/add" class="btn btn-primary">+ Enroll Student</a>
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Section</th>
+                <th>Semester</th>
+                <th>Enroll Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (enrollments.length === 0) { %>
+            <tr><td colspan="7" class="empty">No enrollments found.</td></tr>
+            <% } %>
+            <% enrollments.forEach(e => { %>
+            <tr>
+                <td><%= e.EnrollmentID %></td>
+                <td><strong><%= e.StudentName %></strong></td>
+                <td><%= e.CourseCode %> – <%= e.CourseName %></td>
+                <td class="center"><%= e.SectionNo %></td>
+                <td><%= e.Semester %></td>
+                <td><%= e.EnrollDate ? new Date(e.EnrollDate).toLocaleDateString() : '—' %></td>
+                <td>
+                    <span class="badge badge-<%=
+                        e.Status === 'Enrolled'   ? 'green'  :
+                        e.Status === 'Completed'  ? 'blue'   :
+                        e.Status === 'Dropped'    ? 'red'    : 'gray'
+                    %>"><%= e.Status %></span>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>
